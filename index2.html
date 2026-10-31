@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B1B3A">
+<meta name="description" content="FairMarket AI — transparent property price intelligence and hyper-local valuation insights.">
+<title>FairMarket AI | Property Intelligence</title>
+
+<!-- Pinned external libraries -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+/* =========================================================
+   1. DESIGN TOKENS & GLOBAL STYLES
+========================================================= */
+:root {
+  --navy:#0B1B3A;
+  --navy2:#10274B;
+  --teal:#14B8A6;
+  --blue:#3B82F6;
+  --violet:#8B5CF6;
+  --amber:#F59E0B;
+  --green:#22C55E;
+  --red:#EF4444;
+  --bg:#F3F7FC;
+  --surface:rgba(255,255,255,.82);
+  --surface-solid:#FFFFFF;
+  --text:#14243D;
+  --muted:#64748B;
+  --border:rgba(148,163,184,.23);
+  --shadow:0 18px 55px rgba(15,35,70,.09);
+  --radius:22px;
+  --nav-height:76px;
+}
+[data-theme="dark"] {
+  --bg:#071326;
+  --surface:rgba(17,35,62,.82);
+  --surface-solid:#11233E;
+  --text:#E7F0FC;
+  --muted:#9BAEC6;
+  --border:rgba(148,163,184,.17);
+  --shadow:0 18px 55px rgba(0,0,0,.25);
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth;scroll-padding-top:100px}
+body {
+  font-family:Inter,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+  transition:background .3s,color .3s;
+}
+button,input,select {font:inherit}
+button,a { -webkit-tap-highlight-color:transparent }
+button {cursor:pointer}
+a {color:inherit;text-decoration:none}
+img {max-width:100%;display:block}
+:focus-visible {outline:3px solid var(--teal);outline-offset:4px}
+.container {width:min(1160px,91%);margin:auto}
+.section {padding:105px 0;position:relative}
+.section-head {max-width:690px;margin-bottom:42px}
+.eyebrow {
+  display:inline-flex;align-items:center;gap:9px;
+  color:var(--teal);font-weight:800;font-size:.76rem;
+  letter-spacing:1.8px;text-transform:uppercase;margin-bottom:15px
+}
+.eyebrow:before {content:"";width:25px;height:2px;background:var(--teal)}
+h1,h2,h3,h4 {font-family:"Plus Jakarta Sans",sans-serif}
+h2 {font-size:clamp(2rem,4vw,3.1rem);line-height:1.17;letter-spacing:-1.6px}
+.section-head p {color:var(--muted);line-height:1.8;margin-top:15px}
+.gradient-text {
+  background:linear-gradient(100deg,var(--teal),var(--blue),var(--violet));
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:gradientFlow 5s linear infinite
+}
+@keyframes gradientFlow {to{background-position:200% center}}
+.glass {
+  background:var(--surface);backdrop-filter:blur(18px);
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  border-radius:var(--radius)
+}
+.muted {color:var(--muted)}
+.small {font-size:.78rem}
+.btn {
+  border:0;border-radius:12px;padding:14px 21px;min-height:46px;
+  font-weight:700;display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;transition:transform .25s,box-shadow .25s,background .25s;
+  position:relative;overflow:hidden
+}
+.btn:hover {transform:translateY(-3px);box-shadow:0 12px 28px rgba(20,184,166,.2)}
+.btn:active {transform:scale(.97)}
+.btn-primary {background:linear-gradient(110deg,var(--teal),#0D9488);color:#062B35}
+.btn-dark {background:var(--navy);color:white}
+.btn-outline {border:1px solid var(--border);background:var(--surface);color:var(--text)}
+.btn-sm {padding:10px 14px;min-height:40px;font-size:.83rem}
+.icon-btn {
+  width:44px;height:44px;border:1px solid var(--border);border-radius:13px;
+  background:var(--surface);color:var(--text);display:grid;place-items:center
+}
+.demo-strip {
+  background:linear-gradient(90deg,#FFF4D8,#FFF9EC);
+  color:#80510B;padding:9px 15px;text-align:center;font-size:.76rem;font-weight:700;
+  border-bottom:1px solid #F5DCA6
+}
+[data-theme="dark"] .demo-strip {background:#392B16;color:#FFD88B;border-color:#6A4C20}
+.demo-strip i {margin-right:7px}
+
+/* =========================================================
+   2. ANIMATED BACKGROUND
+========================================================= */
+.ambient {
+  position:fixed;inset:0;pointer-events:none;z-index:-2;overflow:hidden;
+  background:radial-gradient(ellipse at 10% 10%,rgba(20,184,166,.09),transparent 34%),
+             radial-gradient(ellipse at 90% 25%,rgba(139,92,246,.09),transparent 32%);
+}
+.orb {
+  position:absolute;border-radius:50%;filter:blur(75px);opacity:.17;
+  animation:floatOrb 18s ease-in-out infinite alternate
+}
+.orb.one {width:300px;height:300px;background:var(--teal);top:12%;left:-130px}
+.orb.two {width:350px;height:350px;background:var(--violet);top:55%;right:-180px;animation-delay:-5s}
+.orb.three {width:220px;height:220px;background:var(--blue);top:85%;left:35%;animation-delay:-9s}
+@keyframes floatOrb {to{transform:translate(70px,-60px) scale(1.2)}}
+.skyline {
+  position:absolute;bottom:0;left:0;width:100%;height:130px;opacity:.035;
+  background:linear-gradient(transparent,var(--navy));
+  clip-path:polygon(0 100%,0 55%,4% 55%,4% 35%,7% 35%,7% 65%,11% 65%,11% 20%,15% 20%,15% 75%,20% 75%,20% 42%,24% 42%,24% 10%,29% 10%,29% 68%,34% 68%,34% 35%,39% 35%,39% 78%,45% 78%,45% 24%,50% 24%,50% 65%,55% 65%,55% 40%,60% 40%,60% 15%,65% 15%,65% 72%,71% 72%,71% 36%,76% 36%,76% 65%,82% 65%,82% 25%,87% 25%,87% 70%,93% 70%,93% 45%,97% 45%,97% 55%,100% 55%,100% 100%);
+}
+.progress-top {position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--teal),var(--violet));z-index:2000}
+
+/* =========================================================
+   3. NAVIGATION
+========================================================= */
+.navbar {
+  height:var(--nav-height);position:sticky;top:0;z-index:1000;
+  background:var(--surface);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border)
+}
+.nav-inner {height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo {display:flex;align-items:center;gap:10px;font-family:"Plus Jakarta Sans";font-weight:800;font-size:1.15rem;letter-spacing:-.5px}
+.logo-mark {
+  width:39px;height:39px;border-radius:13px;display:grid;place-items:center;
+  color:#052D35;background:linear-gradient(140deg,#6EE7D7,var(--teal),#60A5FA);
+  box-shadow:0 8px 22px rgba(20,184,166,.23)
+}
+.nav-links {display:flex;align-items:center;gap:25px}
+.nav-links a {font-size:.83rem;font-weight:650;color:var(--muted);transition:color .2s}
+.nav-links a:hover {color:var(--teal)}
+.nav-actions {display:flex;align-items:center;gap:10px}
+.menu-btn {display:none}
+.mobile-nav {
+  display:none;position:absolute;top:var(--nav-height);left:0;width:100%;
+  background:var(--surface-solid);padding:18px 5%;border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow)
+}
+.mobile-nav.open {display:grid;gap:17px}
+.mobile-nav a {font-weight:650;color:var(--muted);padding:5px 0}
+
+/* =========================================================
+   4. HERO
+========================================================= */
+.hero {padding:80px 0 85px;min-height:620px;display:flex;align-items:center}
+.hero-grid {display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
+.hero h1 {font-size:clamp(2.8rem,5.5vw,5rem);line-height:1.08;letter-spacing:-3px;margin:14px 0 22px}
+.hero-copy {font-size:1.05rem;line-height:1.8;color:var(--muted);max-width:560px}
+.typing-line {color:var(--teal);font-weight:750;min-height:29px;margin-bottom:20px}
+.typing-cursor {border-right:2px solid var(--teal);padding-right:4px;animation:blink .8s infinite}
+@keyframes blink {50%{border-color:transparent}}
+.hero-buttons {display:flex;gap:12px;flex-wrap:wrap;margin:27px 0 35px}
+.hero-stats {display:flex;gap:30px;flex-wrap:wrap}
+.stat strong {font-family:"Plus Jakarta Sans";font-size:1.55rem;display:block}
+.stat span {font-size:.76rem;color:var(--muted)}
+.hero-visual {position:relative;min-height:460px}
+.hero-photo {
+  position:absolute;inset:15px 12px 15px 35px;border-radius:32px;overflow:hidden;
+  background:linear-gradient(135deg,#163A60,#14B8A6);
+  box-shadow:0 30px 80px rgba(11,27,58,.2)
+}
+.hero-photo img {width:100%;height:100%;object-fit:cover;opacity:.86}
+.hero-photo:after {content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,20,40,.48),transparent 60%)}
+.photo-caption {position:absolute;bottom:25px;left:25px;z-index:1;color:white}
+.photo-caption small {opacity:.8}
+.float-card {
+  position:absolute;padding:17px 19px;border-radius:18px;background:var(--surface-solid);
+  border:1px solid var(--border);box-shadow:var(--shadow);animation:cardFloat 5s ease-in-out infinite
+}
+.float-card.one {top:35px;left:0}
+.float-card.two {right:-5px;bottom:35px;animation-delay:-2s}
+@keyframes cardFloat {50%{transform:translateY(-12px)}}
+.float-card strong {font-size:1.2rem;display:block}
+.float-card small {color:var(--muted)}
+.float-icon {width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:rgba(20,184,166,.13);color:var(--teal);margin-bottom:8px}
+
+/* =========================================================
+   10. HOW IT WORKS, FAQ, FOOTER
+========================================================= */
+.steps {display:grid;grid-template-columns:repeat(4,1fr);gap:17px;position:relative}
+.step-card {padding:24px;position:relative}
+.step-number {width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:rgba(20,184,166,.13);color:var(--teal);font-weight:800;margin-bottom:20px}
+.step-card h3 {font-size:1rem;margin-bottom:10px}
+.step-card p {font-size:.8rem;color:var(--muted);line-height:1.7}
+.faq-layout {max-width:820px}
+.faq-item {border-bottom:1px solid var(--border)}
+.faq-question {width:100%;padding:20px 4px;border:0;background:transparent;color:var(--text);display:flex;justify-content:space-between;text-align:left;gap:15px;font-weight:750}
+.faq-answer {max-height:0;overflow:hidden;color:var(--muted);font-size:.85rem;line-height:1.8;transition:max-height .3s,padding .3s}
+.faq-item.open .faq-answer {max-height:200px;padding:0 4px 20px}
+.faq-item.open .faq-question i {transform:rotate(180deg)}
+.faq-question i {transition:transform .2s}
+.footer {background:#09182F;color:#EAF2FC;padding:65px 0 25px;margin-top:35px}
+.footer-grid {display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:35px}
+.footer p,.footer a {color:#9BAEC6;font-size:.81rem;line-height:1.9}
+.footer h4 {margin-bottom:15px}
+.footer-links {display:grid;gap:7px}
+.socials {display:flex;gap:10px;margin-top:20px}
+.socials a {width:38px;height:38px;display:grid;place-items:center;background:rgba(255,255,255,.08);border-radius:12px;color:white}
+.newsletter {display:flex;margin-top:13px}
+.newsletter input {min-width:0;width:100%;padding:12px;border:1px solid #354761;background:#142944;color:white;border-radius:10px 0 0 10px}
+.newsletter button {border:0;background:var(--teal);color:#052D35;padding:0 15px;border-radius:0 10px 10px 0}
+.footer-bottom {border-top:1px solid #263952;margin-top:40px;padding-top:20px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#8DA1BA;font-size:.73rem}
+
+/* =========================================================
+   11. MODALS, TOASTS, FLOATING ACTIONS
+========================================================= */
+.modal-backdrop {
+  position:fixed;inset:0;background:rgba(4,13,29,.67);backdrop-filter:blur(9px);
+  z-index:1500;display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal-backdrop.show {display:flex;animation:fadeIn .2s}
+.modal {
+  width:min(520px,100%);max-height:90vh;overflow:auto;
+  background:var(--surface-solid);color:var(--text);border:1px solid var(--border);
+  border-radius:23px;padding:28px;box-shadow:0 30px 100px rgba(0,0,0,.35);
+  animation:modalIn .25s ease
+}
+@keyframes fadeIn {from{opacity:0}to{opacity:1}}
+@keyframes modalIn {from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.modal-head {display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-head h3 {font-size:1.2rem}
+.modal-close {width:37px;height:37px;border:1px solid var(--border);border-radius:11px;background:var(--surface);color:var(--text)}
+.modal p {font-size:.86rem;line-height:1.8;color:var(--muted)}
+.toast-wrap {position:fixed;right:20px;top:95px;z-index:2500;display:grid;gap:10px}
+.toast {padding:14px 18px;border-radius:13px;background:var(--navy);color:white;box-shadow:var(--shadow);font-size:.82rem;animation:toastIn .3s;max-width:320px}
+@keyframes toastIn {from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.float-actions {position:fixed;right:22px;bottom:22px;z-index:900;display:grid;gap:10px}
+.float-action {width:49px;height:49px;border:0;border-radius:16px;background:var(--navy);color:white;box-shadow:0 10px 30px rgba(11,27,58,.25);font-size:1.05rem}
+.float-action.help {background:var(--teal);color:#052D35}
+#backTop {display:none}
+.reveal {opacity:0;transform:translateY(25px);transition:opacity .7s,transform .7s}
+.reveal.visible {opacity:1;transform:none}
+
+/* =========================================================
+   12. RESPONSIVE
+========================================================= */
+@media(max-width:1000px) {
+  .nav-links {gap:14px}
+  .nav-links a {font-size:.75rem}
+  .hero-grid {gap:30px}
+  .footer-grid {grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:800px) {
+  :root {--nav-height:68px}
+  .nav-links,.desktop-cta {display:none}
+  .menu-btn {display:grid}
+  .hero {padding:55px 0}
+  .hero-grid {grid-template-columns:1fr}
+  .hero-visual {min-height:390px}
+  .steps {grid-template-columns:repeat(2,1fr)}
+  .section {padding:75px 0}
+}
+@media(max-width:540px) {
+  .container {width:92%}
+  .hero h1 {letter-spacing:-2px}
+  .hero-visual {min-height:330px}
+  .hero-photo {inset:12px 5px}
+  .float-card {padding:12px}
+  .float-card.two {right:0;bottom:12px}
+  .hero-stats {gap:18px}
+  .steps {grid-template-columns:1fr}
+  .footer-grid {grid-template-columns:1fr}
+  .footer-bottom {flex-direction:column}
+  .section-head {margin-bottom:28px}
+  .toast-wrap {left:12px;right:12px;top:80px}
+  .toast {max-width:none}
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+  .reveal {opacity:1;transform:none}
+}
+
+
+/* =========================================================
+   13. PREMIUM UI/UX POLISH — ORIGINAL PALETTE PRESERVED
+========================================================= */
+:root{--ui-glow:rgba(20,184,166,.18)}
+body{background-image:radial-gradient(circle at 1px 1px,rgba(59,130,246,.055) 1px,transparent 0);background-size:26px 26px}
+::selection{background:rgba(20,184,166,.25);color:var(--text)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--teal),var(--blue));border:3px solid var(--bg);border-radius:20px}
+.navbar{box-shadow:0 8px 30px rgba(11,27,58,.045)}
+.nav-links a{position:relative;padding:9px 0}
+.nav-links a:after{content:"";position:absolute;left:0;bottom:1px;width:0;height:2px;border-radius:4px;background:var(--teal);transition:width .25s}
+.nav-links a:hover:after{width:100%}
+.logo-mark{transition:transform .35s,box-shadow .35s}
+.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.08);box-shadow:0 10px 28px rgba(20,184,166,.34)}
+.hero{isolation:isolate;overflow:hidden}
+.hero:before{content:"";position:absolute;z-index:-1;width:520px;height:520px;border-radius:50%;right:-180px;top:-90px;background:radial-gradient(circle,rgba(20,184,166,.12),rgba(59,130,246,.045) 48%,transparent 70%);pointer-events:none}
+.hero h1{max-width:720px;text-wrap:balance}
+.hero-photo{border:1px solid rgba(255,255,255,.3);transform:perspective(1100px) rotateY(-4deg) rotateX(1deg);transition:transform .6s,box-shadow .6s}
+.hero-visual:hover .hero-photo{transform:perspective(1100px) rotateY(0) rotateX(0) translateY(-4px);box-shadow:0 38px 90px rgba(11,27,58,.26)}
+.hero-photo img{transition:transform 1s;filter:saturate(1.08)}
+.hero-visual:hover .hero-photo img{transform:scale(1.055)}
+.float-card{backdrop-filter:blur(18px);border-color:rgba(20,184,166,.18)}
+.float-card.one{left:-8px}.float-card.two{right:-12px}
+.stat{position:relative}.stat strong{letter-spacing:-.8px}
+.btn-primary{box-shadow:0 9px 22px rgba(20,184,166,.2)}
+.btn-primary:hover{box-shadow:0 13px 30px rgba(20,184,166,.3)}
+.btn-outline:hover,.icon-btn:hover{border-color:var(--teal);color:var(--teal)}
+.glass{transition:border-color .25s,box-shadow .25s}
+.glass:hover{border-color:rgba(20,184,166,.28)}
+.step-card{transition:transform .25s,border-color .25s}
+.step-card:hover{transform:translateY(-7px);border-color:rgba(20,184,166,.4)}
+.step-number{box-shadow:inset 0 0 0 1px rgba(20,184,166,.12)}
+.faq-question:hover{color:var(--teal)}
+.socials a{transition:transform .2s,background .2s,color .2s}
+.socials a:hover{transform:translateY(-4px);background:var(--teal);color:#052D35}
+.float-action{transition:transform .2s,box-shadow .2s}
+.float-action:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 14px 32px rgba(11,27,58,.3)}
+.modal{border-top:3px solid var(--teal)}
+.toast{border:1px solid rgba(20,184,166,.25)}
+.section-head h2{max-width:760px}
+.section-head p{max-width:620px}
+@media(max-width:800px){
+ .hero-photo{transform:none}.hero-visual:hover .hero-photo{transform:translateY(-3px)}
+ .float-card.one{left:0}.float-card.two{right:0}
+ .nav-inner{gap:10px}.nav-actions{gap:7px}
+}
+@media(max-width:540px){
+ .hero{min-height:auto}.hero h1{font-size:clamp(2.45rem,12vw,3.55rem)}
+ .hero-copy{font-size:.94rem}.hero-buttons .btn{width:100%}
+ .float-card.one{top:5px}.float-card.two{bottom:2px}
+ .float-card strong{font-size:1rem}.float-card small{font-size:.68rem}
+}
+@media(prefers-reduced-motion:reduce){.hero-photo,.hero-photo img,.float-card{animation:none!important;transition:none!important;transform:none!important}}
+
+
+.visual-strip{padding:25px 0 55px;position:relative}
+.visual-strip-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:22px}
+.visual-strip-head h2{font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-1px}
+.visual-strip-head p{max-width:360px;color:var(--muted);font-size:.85rem;line-height:1.75}
+.visual-gallery{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:15px}
+.visual-tile{height:205px;position:relative;overflow:hidden;border-radius:19px;background:linear-gradient(135deg,#10274B,#14B8A6);box-shadow:var(--shadow);isolation:isolate}
+.visual-tile-large{height:245px}
+.visual-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,18,39,.82),transparent 70%);z-index:0}
+.visual-tile img{width:100%;height:100%;object-fit:cover;transition:transform .7s;filter:saturate(.92)}
+.visual-tile:hover img{transform:scale(1.07);filter:saturate(1.12)}
+.visual-tile div{position:absolute;z-index:1;left:18px;right:18px;bottom:17px;color:white}
+.visual-tile span{font-size:.62rem;letter-spacing:1.5px;color:#9FE8DE;font-weight:800}
+.visual-tile h3{font-size:1.08rem;margin-top:5px}
+@media(max-width:800px){.visual-gallery{grid-template-columns:1fr 1fr}.visual-tile-large{grid-column:1/-1}.visual-strip-head{display:block}.visual-strip-head p{margin-top:10px}}
+@media(max-width:540px){.visual-gallery{grid-template-columns:1fr}.visual-tile,.visual-tile-large{height:190px;grid-column:auto}.visual-strip{padding:8px 0 35px}}
+
+
+
+/* =========================================================
+   PREMIUM VISUAL REFINEMENT — ORIGINAL PALETTE PRESERVED
+========================================================= */
+:root{
+  --premium-gradient:linear-gradient(115deg,#14B8A6 0%,#3B82F6 52%,#8B5CF6 100%);
+  --premium-glow:0 22px 65px rgba(59,130,246,.15),0 10px 30px rgba(20,184,166,.10);
+}
+body{
+  background-image:
+    radial-gradient(ellipse at 7% 24%,rgba(20,184,166,.075),transparent 30%),
+    radial-gradient(ellipse at 93% 46%,rgba(139,92,246,.075),transparent 32%),
+    linear-gradient(180deg,rgba(255,255,255,.18),transparent 42%);
+}
+[data-theme="dark"] body{background-image:radial-gradient(ellipse at 7% 24%,rgba(20,184,166,.10),transparent 30%),radial-gradient(ellipse at 93% 46%,rgba(139,92,246,.12),transparent 32%)}
+.demo-strip{background:linear-gradient(90deg,#E8FBF8,#EEF4FF 52%,#F3EDFF);border-bottom-color:rgba(59,130,246,.16);letter-spacing:.15px}
+[data-theme="dark"] .demo-strip{background:linear-gradient(90deg,#123C43,#172D50 52%,#30234D);color:#C7F9F1;border-color:rgba(139,92,246,.25)}
+.navbar{background:color-mix(in srgb,var(--surface-solid) 82%,transparent);backdrop-filter:blur(24px);border-bottom-color:rgba(59,130,246,.12);box-shadow:0 10px 35px rgba(11,27,58,.07)}
+.logo-mark{background:linear-gradient(135deg,#99F6E4 0%,#14B8A6 38%,#3B82F6 72%,#8B5CF6 100%);color:#08223A;box-shadow:0 8px 26px rgba(59,130,246,.25)}
+.gradient-text{background-image:linear-gradient(100deg,#14B8A6 0%,#3B82F6 48%,#8B5CF6 100%)}
+.btn-primary{background:linear-gradient(105deg,#5EEAD4 0%,#14B8A6 34%,#3B82F6 100%);color:#062B35;box-shadow:0 10px 28px rgba(20,184,166,.24),inset 0 1px rgba(255,255,255,.38)}
+.btn-primary:hover{box-shadow:0 16px 38px rgba(59,130,246,.25),0 8px 22px rgba(20,184,166,.22)}
+.btn-outline{border-color:rgba(59,130,246,.22);box-shadow:inset 0 1px rgba(255,255,255,.5)}
+.premium-banner{height:clamp(360px,42vw,520px);position:relative;overflow:hidden;isolation:isolate;background:#0B1B3A;color:#fff;display:flex;align-items:center}
+.premium-banner-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 54%;z-index:-3;filter:saturate(1.08) contrast(1.03);animation:bannerReveal 1.2s ease both}
+.premium-banner-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(5,17,39,.94) 0%,rgba(7,28,55,.82) 37%,rgba(7,28,55,.40) 72%,rgba(7,28,55,.26) 100%),linear-gradient(0deg,rgba(5,17,39,.55),transparent 45%)}
+.premium-banner-glow{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:-1}
+.premium-banner-glow-a{width:390px;height:390px;right:10%;top:-190px;background:radial-gradient(circle,rgba(20,184,166,.36),transparent 68%)}
+.premium-banner-glow-b{width:430px;height:430px;right:-100px;bottom:-300px;background:radial-gradient(circle,rgba(139,92,246,.42),transparent 68%)}
+.premium-banner-content{position:relative;padding-top:24px;padding-bottom:28px;animation:bannerTextIn .8s .12s both}
+.banner-kicker{display:inline-flex;align-items:center;gap:10px;font-size:.7rem;font-weight:800;letter-spacing:2.2px;color:#A7F3E9;margin-bottom:20px}
+.banner-live-dot{width:8px;height:8px;border-radius:50%;background:#5EEAD4;box-shadow:0 0 0 5px rgba(94,234,212,.14),0 0 18px #5EEAD4}
+.premium-banner h2{font-size:clamp(2.5rem,5.4vw,5rem);line-height:1.04;letter-spacing:-2.8px;max-width:790px;color:#fff;text-wrap:balance}
+.premium-banner h2 span{background:linear-gradient(95deg,#5EEAD4 0%,#60A5FA 52%,#C4B5FD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.premium-banner-content p{max-width:570px;color:rgba(239,247,255,.83);font-size:clamp(.92rem,1.4vw,1.06rem);line-height:1.8;margin-top:18px}
+.banner-actions{display:flex;align-items:center;gap:25px;flex-wrap:wrap;margin-top:50px}
+.banner-text-link{font-size:.87rem;font-weight:700;color:#E4F2FF;transition:color .2s,transform .2s}
+.banner-text-link i{margin-left:7px;color:#5EEAD4}.banner-text-link:hover{color:#5EEAD4;transform:translateX(3px)}
+.banner-side-note{position:absolute;right:4.5%;bottom:28px;color:rgba(255,255,255,.78);font-size:.64rem;font-weight:800;letter-spacing:2px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.banner-bottom-line{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#14B8A6,#3B82F6,#8B5CF6)}
+@keyframes bannerReveal{from{transform:scale(1.055);opacity:.7}to{transform:scale(1);opacity:1}}
+@keyframes bannerTextIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.section{padding-top:112px;padding-bottom:112px}
+.section-head{margin-bottom:48px}
+.section-head h2{letter-spacing:-1.8px}
+.glass,.step-card{box-shadow:var(--premium-glow),var(--shadow)}
+.step-card{border:1px solid rgba(59,130,246,.14)}
+.step-card:hover{box-shadow:0 24px 60px rgba(59,130,246,.14),0 12px 30px rgba(20,184,166,.10)}
+.visual-tile{border:1px solid rgba(255,255,255,.35);box-shadow:0 20px 45px rgba(11,27,58,.13)}
+.visual-tile:after{background:linear-gradient(0deg,rgba(5,18,39,.88),rgba(5,18,39,.02) 75%)}
+.eyebrow{color:var(--teal)}
+.stat{padding:12px 15px;border-radius:15px;background:linear-gradient(135deg,rgba(20,184,166,.08),rgba(59,130,246,.055),rgba(139,92,246,.045));border:1px solid rgba(59,130,246,.09)}
+.stat strong{background:linear-gradient(100deg,var(--text),var(--teal),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:800px){.premium-banner{height:430px}.premium-banner-shade{background:linear-gradient(90deg,rgba(5,17,39,.92),rgba(7,28,55,.63)),linear-gradient(0deg,rgba(5,17,39,.35),transparent)}.banner-side-note{display:none}.premium-banner h2{font-size:clamp(2.55rem,8vw,4rem)}}
+@media(max-width:540px){.premium-banner{height:470px;align-items:center}.premium-banner-content{padding-top:12px}.banner-kicker{font-size:.61rem;letter-spacing:1.5px}.premium-banner h2{font-size:clamp(2.35rem,11vw,3.35rem);letter-spacing:-1.8px}.premium-banner-content p{font-size:.9rem;line-height:1.7}.banner-actions{align-items:flex-start;flex-direction:column;gap:16px;margin-top:23px}.banner-actions .btn{width:100%}.section{padding-top:78px;padding-bottom:78px}.stat{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.premium-banner-image,.premium-banner-content{animation:none!important}}
+
+
+/* =========================================================
+   SIGNATURE LUXURY LAYER + 3D POP-UP BUTTON SYSTEM
+========================================================= */
+:root{
+  --fm-depth:0 5px 0 rgba(5,35,57,.18),0 12px 24px rgba(11,27,58,.13);
+  --fm-depth-hover:0 7px 0 rgba(5,35,57,.16),0 20px 34px rgba(20,96,150,.22),0 0 26px rgba(20,184,166,.13);
+  --fm-edge:rgba(255,255,255,.42);
+}
+html{scroll-behavior:smooth}
+.glass,.step-card,.faq-item{
+  position:relative;
+  isolation:isolate;
+  border-color:color-mix(in srgb,var(--border) 72%,rgba(59,130,246,.28));
+}
+.glass:after,.step-card:after{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:2;
+  background:linear-gradient(135deg,rgba(20,184,166,.22),transparent 35%,rgba(139,92,246,.2));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.btn,.btn-primary,.btn-outline,.icon-btn,.float-action,.modal-close{
+  --rx:0deg;--ry:0deg;
+  position:relative;
+  transform-style:preserve-3d;
+  will-change:transform;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease,filter .2s ease,border-color .2s ease;
+  backface-visibility:hidden;
+}
+.btn,.btn-primary{
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:0 5px 0 rgba(6,57,73,.27),0 11px 22px rgba(11,27,58,.17),inset 0 1px 0 rgba(255,255,255,.42),inset 0 -2px 0 rgba(4,32,66,.10);
+  text-shadow:0 1px 0 rgba(255,255,255,.16);
+}
+.btn-primary,.btn.btn-primary{
+  background:linear-gradient(115deg,#5EEAD4 0%,#14B8A6 32%,#3B82F6 72%,#6366F1 100%);
+  background-size:180% 180%;
+  color:#062B35;
+}
+.btn-outline,.btn.btn-outline{
+  background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(232,242,255,.82));
+  border:1px solid rgba(59,130,246,.28);
+  box-shadow:0 4px 0 rgba(59,130,246,.13),0 10px 20px rgba(11,27,58,.08),inset 0 1px 0 #fff;
+}
+[data-theme="dark"] .btn-outline,[data-theme="dark"] .btn.btn-outline{
+  background:linear-gradient(145deg,rgba(30,52,83,.98),rgba(20,36,66,.98));
+  color:#EAF4FF;border-color:rgba(96,165,250,.34);
+  box-shadow:0 4px 0 rgba(3,12,28,.42),0 12px 22px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.13);
+}
+.btn:hover,.btn-primary:hover,.btn-outline:hover,.btn.btn-primary:hover,.btn.btn-outline:hover{
+  filter:saturate(1.12) brightness(1.035);
+  box-shadow:0 7px 0 rgba(6,57,73,.22),0 18px 32px rgba(20,96,150,.22),0 0 24px rgba(20,184,166,.15),inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn:active,.btn-primary:active,.btn-outline:active,.icon-btn:active,.float-action:active{
+  transform:translateY(3px) scale(.985)!important;
+  box-shadow:0 2px 0 rgba(6,57,73,.24),0 5px 10px rgba(11,27,58,.14),inset 0 2px 5px rgba(4,20,40,.12)!important;
+}
+.btn i,.btn-primary i,.float-action i{transform:translateZ(9px);transition:transform .2s ease}
+.btn:hover i,.btn-primary:hover i{transform:translate3d(2px,-2px,13px)}
+.icon-btn,.modal-close{
+  box-shadow:0 3px 0 rgba(11,27,58,.12),0 8px 16px rgba(11,27,58,.10),inset 0 1px 0 rgba(255,255,255,.48);
+}
+.icon-btn:hover,.modal-close:hover{box-shadow:0 5px 0 rgba(11,27,58,.12),0 13px 22px rgba(59,130,246,.19);filter:brightness(1.06)}
+.float-action{box-shadow:0 6px 0 rgba(11,27,58,.16),0 16px 28px rgba(11,27,58,.2),inset 0 1px 0 rgba(255,255,255,.45)}
+.float-action:hover{box-shadow:0 8px 0 rgba(11,27,58,.14),0 22px 36px rgba(59,130,246,.24),0 0 25px rgba(20,184,166,.2)}
+.banner-actions .btn-primary{overflow:hidden}
+.banner-actions .btn-primary:before{
+  content:"";position:absolute;inset:-70% auto -70% -35%;width:24%;
+  transform:translateX(-180%) rotate(22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);
+  transition:transform .75s ease;pointer-events:none;
+}
+.banner-actions .btn-primary:hover:before{transform:translateX(650%) rotate(22deg)}
+.step-card:before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;
+  background:radial-gradient(360px circle at var(--spot-x,50%) var(--spot-y,0%),rgba(20,184,166,.10),transparent 58%);
+  transition:opacity .25s ease;
+}
+.step-card:hover:before{opacity:1}
+.btn:focus-visible,.btn-primary:focus-visible,.btn-outline:focus-visible,.icon-btn:focus-visible,.float-action:focus-visible{
+  outline:3px solid #5EEAD4;outline-offset:4px;
+}
+@media(max-width:700px){
+  .btn,.btn-primary,.btn-outline{box-shadow:0 4px 0 rgba(6,57,73,.2),0 8px 15px rgba(11,27,58,.12),inset 0 1px 0 rgba(255,255,255,.35)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn,.btn-primary,.btn-outline,.icon-btn,.float-action,.modal-close{transition:none!important;transform:none!important}
+  .banner-actions .btn-primary:before{display:none}
+}
+
+
+</style>
+</head>
+
+<body>
+<div class="progress-top" id="progressTop"></div>
+<div class="ambient" aria-hidden="true">
+  <div class="orb one"></div><div class="orb two"></div><div class="orb three"></div><div class="skyline"></div>
+</div>
+
+<div class="demo-strip">
+  <i class="fa-solid fa-circle-info"></i>
+  DEMO DATA — Not a verified valuation. Prices and predictions are synthetic.
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="logo" href="#home" aria-label="FairMarket AI home">
+      <span class="logo-mark"><i class="fa-solid fa-house-chimney"></i></span>
+      <span>FairMarket<span class="gradient-text"> AI</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark mode"><i class="fa-solid fa-moon"></i></button>
+      <a href="#predict" class="btn btn-primary btn-sm desktop-cta">Get Estimate <i class="fa-solid fa-arrow-right"></i></a>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="#home">Home</a>
+  </nav>
+</header>
+
+<!-- PREMIUM PROPERTY BANNER -->
+<section class="premium-banner" aria-label="FairMarket AI property intelligence banner">
+  <img class="premium-banner-image" src="https://images.unsplash.com/photo-1741287541081-7d9b6d8903de?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" alt="Premium contemporary home surrounded by landscaped greenery" fetchpriority="high" onerror="this.style.display='none'">
+  <div class="premium-banner-shade"></div>
+  <div class="premium-banner-glow premium-banner-glow-a"></div>
+  <div class="premium-banner-glow premium-banner-glow-b"></div>
+  <div class="container premium-banner-content">
+    <div class="banner-kicker"><span class="banner-live-dot"></span> PROPERTY INTELLIGENCE, REIMAGINED</div>
+    <h2>Find the value.<br><span>See the bigger picture.</span></h2>
+    <p>Smarter property insights, neighbourhood context and clearer decisions — all in one place.</p>
+    <div class="banner-actions">
+      <a class="btn btn-primary" href="#predict">Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+      <a class="banner-text-link" href="#how">Discover how it works <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    </div>
+  </div>
+  <div class="banner-side-note"><i class="fa-solid fa-location-dot"></i> LOCATION · VALUE · INSIGHT</div>
+  <div class="banner-bottom-line"></div>
+</section>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">Smarter property decisions</div>
+      <h1>Know what a property is <span class="gradient-text">really worth.</span></h1>
+      <div class="typing-line"><span id="typingText" class="typing-cursor">Hyper-local price intelligence</span></div>
+      <p class="hero-copy">Discover a clearer picture of property value with location intelligence, comparable listings and explainable price insights — all in one place.</p>
+      <div class="hero-buttons">
+        <a href="#predict" class="btn btn-primary">Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#how" class="btn btn-outline"><i class="fa-regular fa-circle-play"></i> How it works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong class="counter" data-target="40">0</strong><span>Demo properties</span></div>
+        <div class="stat"><strong class="counter" data-target="5">0</strong><span>Intelligence tools</span></div>
+        <div class="stat"><strong>24/7</strong><span>Digital access</span></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1100&auto=format&fit=crop&q=85" alt="Modern luxury home with landscaped outdoor space" fetchpriority="high" onerror="this.style.display='none'">
+        <div class="photo-caption"><small>PROPERTY INTELLIGENCE</small><h3>See beyond the listing price.</h3></div>
+      </div>
+      <div class="float-card one">
+        <div class="float-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <strong>+12.4%</strong><small>Illustrative location impact</small>
+      </div>
+      <div class="float-card two">
+        <div class="float-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <strong>Hyper-local</strong><small>Neighbourhood context</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTY VISUAL STRIP -->
+<section class="visual-strip" aria-label="Property types and neighbourhoods">
+  <div class="container visual-strip-head">
+    <div><span class="eyebrow">Explore the property landscape</span><h2>Every location tells <span class="gradient-text">a different story.</span></h2></div>
+    <p>From modern apartments to spacious homes, explore the visual context behind property decisions.</p>
+  </div>
+  <div class="container visual-gallery">
+    <article class="visual-tile visual-tile-large"><img loading="lazy" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1100&auto=format&fit=crop&q=82" alt="Contemporary luxury residential property"><div><span>01 / RESIDENTIAL</span><h3>Modern living spaces</h3></div></article>
+    <article class="visual-tile"><img loading="lazy" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&auto=format&fit=crop&q=82" alt="Bright modern home interior"><div><span>02 / INTERIORS</span><h3>Details that matter</h3></div></article>
+    <article class="visual-tile"><img loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=82" alt="Modern city skyline and commercial buildings"><div><span>03 / LOCATION</span><h3>Neighbourhood context</h3></div></article>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Simple by design</div>
+      <h2>Four steps to a clearer<br><span class="gradient-text">property perspective.</span></h2>
+      <p>A transparent workflow designed to make property valuation easier to explore and understand.</p>
+    </div>
+    <div class="steps">
+      <article class="glass step-card reveal"><div class="step-number">01</div><h3>Enter property details</h3><p>Add the location, property type, area, age and condition to start your estimate.</p></article>
+      <article class="glass step-card reveal"><div class="step-number">02</div><h3>Explore local context</h3><p>Review illustrative nearby amenities and location factors on the interactive map.</p></article>
+      <article class="glass step-card reveal"><div class="step-number">03</div><h3>Understand the estimate</h3><p>See the indicative range, price factors and comparable asking-price examples.</p></article>
+      <article class="glass step-card reveal"><div class="step-number">04</div><h3>Test scenarios</h3><p>Explore hypothetical future changes and compare their estimated impact.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Frequently asked questions</div>
+      <h2>Questions worth <span class="gradient-text">asking.</span></h2>
+      <p>Understand what this demonstration does, what it does not do and how a production version could work.</p>
+    </div>
+    <div class="faq-layout reveal">
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">Is this a real property valuation? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-answer">No. This is a hackathon-style frontend demonstration using synthetic property data and illustrative calculation logic. It is not a certified appraisal or a verified market valuation.</div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">What is price per square foot? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-answer">It is a simple comparison metric calculated by dividing a property's price by its area in square feet. It can help compare listings, but differences in location, condition and property type matter.</div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">Are comparable prices completed transactions? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-answer">No. The comparable records in this demo are asking-price examples only. A production system should distinguish asking prices from verified registered transactions.</div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">How could the real AI model be connected? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-answer">The demo prediction function can be replaced with a request to a Python API. A backend could use a trained XGBoost model, explain predictions with SHAP and return the estimate, uncertainty range and feature contributions.</div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">Are future projections guaranteed? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-answer">No. Scenario outputs are hypothetical estimates based on assumptions. They should never be interpreted as guaranteed returns or investment advice.</div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="#home"><span class="logo-mark"><i class="fa-solid fa-house-chimney"></i></span><span>FairMarket AI</span></a>
+        <p style="margin-top:17px;max-width:270px">Making property price intelligence easier to explore, understand and question.</p>
+        <div class="socials">
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div><h4>Explore</h4><div class="footer-links"><a href="#home">Home</a></div></div>
+      <div><h4>Information</h4><div class="footer-links"><a href="#how">How it works</a><a href="#faq">FAQs</a><a href="#" onclick="openModal('contactModal');return false">Contact</a><a href="#" onclick="openModal('disclaimerModal');return false">Data disclaimer</a></div></div>
+      <div><h4>Stay in the loop</h4><p>Get updates about the FairMarket AI prototype.</p><form class="newsletter" id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="Your email address" aria-label="Your email address" required><button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button></form><p class="small" style="margin-top:8px">Demo only. No email is stored or sent.</p></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 FairMarket AI · Prototype demonstration</span><span>Demo data · Not financial or valuation advice</span></div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-actions">
+  <button class="float-action help" aria-label="Open help" onclick="openModal('helpModal')"><i class="fa-regular fa-comment-dots"></i></button>
+  <button class="float-action" id="backTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+<!-- MODALS -->
+<div class="modal-backdrop" id="modalBackdrop" role="presentation">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal-head"><h3 id="modalTitle">Information</h3><button class="modal-close" id="modalClose" aria-label="Close dialog"><i class="fa-solid fa-xmark"></i></button></div>
+    <div id="modalBody"></div>
+  </section>
+</div>
+
+<script>
+/* =========================================================
+   UTILITIES
+========================================================= */
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+const escapeHTML = value => String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+function toast(message,type="success") {
+  const node=document.createElement("div");
+  node.className="toast";
+  node.innerHTML=`<i class="fa-solid ${type==="error"?"fa-circle-exclamation":"fa-circle-check"}" style="margin-right:8px;color:${type==="error"?"#F87171":"#5EEAD4"}"></i>${escapeHTML(message)}`;
+  $("#toastWrap").appendChild(node);
+  setTimeout(()=>node.remove(),3500);
+}
+
+/* =========================================================
+   THEME TOGGLE
+========================================================= */
+const savedTheme=localStorage.getItem("fairmarket-theme");
+if(savedTheme) document.documentElement.dataset.theme=savedTheme;
+function updateThemeIcon() {
+  $("#themeToggle").innerHTML=document.documentElement.dataset.theme==="dark"
+    ? '<i class="fa-solid fa-sun"></i>'
+    : '<i class="fa-solid fa-moon"></i>';
+}
+updateThemeIcon();
+$("#themeToggle").addEventListener("click",()=>{
+  const next=document.documentElement.dataset.theme==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=next;
+  localStorage.setItem("fairmarket-theme",next);
+  updateThemeIcon();
+  toast(`${next==="dark"?"Dark":"Light"} mode enabled`);
+});
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+$("#menuBtn").addEventListener("click",()=>{
+  const nav=$("#mobileNav");
+  const open=nav.classList.toggle("open");
+  $("#menuBtn").setAttribute("aria-expanded",String(open));
+  $("#menuBtn").innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';
+  $("#menuBtn").setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu");
+});
+$$(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>{
+  $("#mobileNav").classList.remove("open");
+  $("#menuBtn").setAttribute("aria-expanded","false");
+  $("#menuBtn").innerHTML='<i class="fa-solid fa-bars"></i>';
+  $("#menuBtn").setAttribute("aria-label","Open navigation menu");
+}));
+
+/* =========================================================
+   HERO TYPING EFFECT
+========================================================= */
+const phrases=["Hyper-local price intelligence","Explainable property estimates","Better-informed property decisions"];
+let phraseIndex=0,charIndex=0,deleting=false;
+function typeEffect() {
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    $("#typingText").textContent=phrases[0];return;
+  }
+  const phrase=phrases[phraseIndex];
+  charIndex+=deleting?-1:1;
+  $("#typingText").textContent=phrase.slice(0,charIndex);
+  let delay=deleting?35:65;
+  if(!deleting&&charIndex===phrase.length){deleting=true;delay=1500}
+  if(deleting&&charIndex===0){deleting=false;phraseIndex=(phraseIndex+1)%phrases.length;delay=350}
+  setTimeout(typeEffect,delay);
+}
+typeEffect();
+
+/* =========================================================
+   SCROLL REVEALS, COUNTERS AND PROGRESS BAR
+========================================================= */
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+$$(".reveal").forEach(el=>revealObserver.observe(el));
+
+const counterObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    const el=entry.target,target=+el.dataset.target;
+    let current=0;
+    const step=Math.max(1,target/35);
+    const timer=setInterval(()=>{
+      current=Math.min(target,current+step);
+      el.textContent=Math.round(current)+(target===40?"+":"");
+      if(current>=target)clearInterval(timer);
+    },35);
+    counterObserver.unobserve(el);
+  });
+});
+$$(".counter").forEach(el=>counterObserver.observe(el));
+
+window.addEventListener("scroll",()=>{
+  const max=document.documentElement.scrollHeight-innerHeight;
+  $("#progressTop").style.width=(max>0?scrollY/max*100:0)+"%";
+  $("#backTop").style.display=scrollY>500?"grid":"none";
+},{passive:true});
+$("#backTop").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+/* =========================================================
+   FAQ ACCORDION
+========================================================= */
+$$(".faq-question").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const item=button.parentElement;
+    const open=item.classList.toggle("open");
+    button.setAttribute("aria-expanded",String(open));
+  });
+});
+
+/* =========================================================
+   ACCESSIBLE REUSABLE MODAL
+========================================================= */
+const modalContent={
+  contactModal:{
+    title:"Contact FairMarket AI",
+    body:`<p>Thanks for exploring the FairMarket AI prototype.</p><br><p>For this demonstration, contact is not connected to a live support service. In a production version, this panel can be connected to a support email, contact form or CRM.</p><br><p><strong>Product:</strong> FairMarket AI<br><strong>Platform:</strong> Property price intelligence prototype</p>`
+  },
+  disclaimerModal:{
+    title:"Data & valuation disclaimer",
+    body:`<p>FairMarket AI is currently a frontend prototype. All demo listings, estimates, amenity locations, price factors and projections are synthetic and are not sourced from verified market transactions.</p><br><p>Asking prices are not verified sale prices. An indicative estimate is not a certified valuation, legal opinion, mortgage assessment or investment recommendation.</p><br><p>Do independent due diligence and consult qualified property professionals before making a transaction.</p>`
+  },
+  helpModal:{
+    title:"FairMarket AI help",
+    body:`<p>Welcome! Follow this quick path through the prototype:</p><br><p><strong>1.</strong> Enter property details in the price predictor.</p><p><strong>2.</strong> Explore the interactive neighbourhood map.</p><p><strong>3.</strong> Review the price-factor explanation.</p><p><strong>4.</strong> Compare synthetic listings.</p><p><strong>5.</strong> Test hypothetical future scenarios.</p><br><p>All outputs are labelled demo data and should not be treated as verified valuations.</p>`
+  }
+};
+let lastFocused=null;
+function openModal(key) {
+  const content=modalContent[key]||modalContent.helpModal;
+  lastFocused=document.activeElement;
+  $("#modalTitle").textContent=content.title;
+  $("#modalBody").innerHTML=content.body;
+  $("#modalBackdrop").classList.add("show");
+  document.body.style.overflow="hidden";
+  $("#modalBackdrop .modal").focus();
+}
+function closeModal() {
+  $("#modalBackdrop").classList.remove("show");
+  document.body.style.overflow="";
+  if(lastFocused?.focus)lastFocused.focus();
+}
+$("#modalClose").addEventListener("click",closeModal);
+$("#modalBackdrop").addEventListener("click",event=>{
+  if(event.target===$("#modalBackdrop"))closeModal();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"&&$("#modalBackdrop").classList.contains("show"))closeModal();
+  if(event.key==="Tab"&&$("#modalBackdrop").classList.contains("show")){
+    const focusable=$$("#modalBackdrop button, #modalBackdrop a, #modalBackdrop input, #modalBackdrop select, #modalBackdrop textarea, #modalBackdrop [tabindex='0']");
+    if(!focusable.length)return;
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
+  }
+});
+
+/* =========================================================
+   NEWSLETTER DEMO
+========================================================= */
+$("#newsletterForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  const email=$("#newsletterEmail").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    toast("Please enter a valid email address","error");return;
+  }
+  $("#newsletterEmail").value="";
+  toast("Thanks! Newsletter signup is demo-only.");
+});
+</script>
+
+<script>
+/* 3D pointer tilt + card spotlight (progressively enhanced, touch-safe) */
+(()=>{
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce)return;
+  const finePointer=window.matchMedia&&window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const buttons=document.querySelectorAll('.btn,.btn-primary,.btn-outline,.icon-btn,.float-action,.modal-close');
+  if(finePointer){
+    buttons.forEach(button=>{
+      if(button.dataset.tiltReady==='true')return;
+      button.dataset.tiltReady='true';
+      button.addEventListener('pointermove',event=>{
+        const rect=button.getBoundingClientRect();
+        const x=(event.clientX-rect.left)/rect.width;
+        const y=(event.clientY-rect.top)/rect.height;
+        const ry=(x-.5)*9;
+        const rx=(.5-y)*8;
+        button.style.setProperty('--rx',rx.toFixed(2)+'deg');
+        button.style.setProperty('--ry',ry.toFixed(2)+'deg');
+        button.style.transform=`perspective(760px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-2px)`;
+      });
+      button.addEventListener('pointerleave',()=>{
+        button.style.transform='';
+        button.style.removeProperty('--rx');
+        button.style.removeProperty('--ry');
+      });
+      button.addEventListener('pointerdown',()=>{button.style.transform='translateY(2px) scale(.985)'});
+      button.addEventListener('pointerup',()=>{button.style.transform=''});
+    });
+    document.querySelectorAll('.step-card').forEach(card=>{
+      card.addEventListener('pointermove',event=>{
+        const rect=card.getBoundingClientRect();
+        card.style.setProperty('--spot-x',(event.clientX-rect.left)+'px');
+        card.style.setProperty('--spot-y',(event.clientY-rect.top)+'px');
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
