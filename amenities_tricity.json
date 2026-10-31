@@ -1,0 +1,302 @@
+[
+  {
+    "id": "AMN-01",
+    "name": "PGIMER Medical Institute",
+    "category": "Hospitals",
+    "lat": 30.7649,
+    "lng": 76.7753,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Sector 12, Chandigarh"
+  },
+  {
+    "id": "AMN-02",
+    "name": "Fortis Hospital Mohali",
+    "category": "Hospitals",
+    "lat": 30.6953,
+    "lng": 76.7314,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.7,
+    "locality": "Phase 8, Mohali"
+  },
+  {
+    "id": "AMN-03",
+    "name": "Max Super Speciality Hospital",
+    "category": "Hospitals",
+    "lat": 30.7402,
+    "lng": 76.7165,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.6,
+    "locality": "Phase 6, Mohali"
+  },
+  {
+    "id": "AMN-04",
+    "name": "Homi Bhabha Cancer Hospital",
+    "category": "Hospitals",
+    "lat": 30.7965,
+    "lng": 76.7351,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.7,
+    "locality": "New Chandigarh"
+  },
+  {
+    "id": "AMN-05",
+    "name": "Amcare Hospital Zirakpur",
+    "category": "Hospitals",
+    "lat": 30.6388,
+    "lng": 76.824,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.4,
+    "locality": "VIP Road, Zirakpur"
+  },
+  {
+    "id": "AMN-06",
+    "name": "Civil Hospital Kharar",
+    "category": "Hospitals",
+    "lat": 30.746,
+    "lng": 76.6495,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.1,
+    "locality": "Kharar"
+  },
+  {
+    "id": "AMN-07",
+    "name": "St. John's High School",
+    "category": "Schools",
+    "lat": 30.7279,
+    "lng": 76.8034,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Sector 26, Chandigarh"
+  },
+  {
+    "id": "AMN-08",
+    "name": "Carmel Convent School",
+    "category": "Schools",
+    "lat": 30.7495,
+    "lng": 76.7932,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.9,
+    "locality": "Sector 9, Chandigarh"
+  },
+  {
+    "id": "AMN-09",
+    "name": "Bhavan Vidyalaya Chandigarh",
+    "category": "Schools",
+    "lat": 30.7262,
+    "lng": 76.7995,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Sector 27, Chandigarh"
+  },
+  {
+    "id": "AMN-10",
+    "name": "Yadavindra Public School (YPS)",
+    "category": "Schools",
+    "lat": 30.6994,
+    "lng": 76.7347,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Phase 8, Mohali"
+  },
+  {
+    "id": "AMN-11",
+    "name": "IISER Mohali Campus",
+    "category": "Schools",
+    "lat": 30.665,
+    "lng": 76.7294,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.9,
+    "locality": "Sector 81, Mohali"
+  },
+  {
+    "id": "AMN-12",
+    "name": "Ashoka Public School Zirakpur",
+    "category": "Schools",
+    "lat": 30.6502,
+    "lng": 76.8091,
+    "source": "Demo Supplemented POI",
+    "rating": 4.3,
+    "locality": "PR-7 Airport Road, Zirakpur"
+  },
+  {
+    "id": "AMN-13",
+    "name": "Delhi Public School Kharar",
+    "category": "Schools",
+    "lat": 30.739,
+    "lng": 76.662,
+    "source": "Demo Supplemented POI",
+    "rating": 4.4,
+    "locality": "Sunny Enclave, Kharar"
+  },
+  {
+    "id": "AMN-14",
+    "name": "Zakir Hussain Rose Garden",
+    "category": "Parks",
+    "lat": 30.7471,
+    "lng": 76.7834,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Sector 16, Chandigarh"
+  },
+  {
+    "id": "AMN-15",
+    "name": "Sukhna Lake & Leisure Valley",
+    "category": "Parks",
+    "lat": 30.7421,
+    "lng": 76.8188,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.9,
+    "locality": "Sector 1, Chandigarh"
+  },
+  {
+    "id": "AMN-16",
+    "name": "Silvi Park Phase 10",
+    "category": "Parks",
+    "lat": 30.6845,
+    "lng": 76.7412,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.6,
+    "locality": "Phase 10, Mohali"
+  },
+  {
+    "id": "AMN-17",
+    "name": "City Park Sector 68 Mohali",
+    "category": "Parks",
+    "lat": 30.6922,
+    "lng": 76.722,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.7,
+    "locality": "Sector 68, Mohali"
+  },
+  {
+    "id": "AMN-18",
+    "name": "Eco City Botanical Greenway",
+    "category": "Parks",
+    "lat": 30.7905,
+    "lng": 76.745,
+    "source": "Demo Supplemented POI",
+    "rating": 4.5,
+    "locality": "Eco City 1, New Chandigarh"
+  },
+  {
+    "id": "AMN-19",
+    "name": "Nature Valley Park Zirakpur",
+    "category": "Parks",
+    "lat": 30.644,
+    "lng": 76.812,
+    "source": "Demo Supplemented POI",
+    "rating": 4.2,
+    "locality": "Zirakpur"
+  },
+  {
+    "id": "AMN-20",
+    "name": "Sector 17 Plaza Market",
+    "category": "Markets",
+    "lat": 30.7405,
+    "lng": 76.7822,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Sector 17, Chandigarh"
+  },
+  {
+    "id": "AMN-21",
+    "name": "Nexus Elante Mall",
+    "category": "Markets",
+    "lat": 30.7056,
+    "lng": 76.8013,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Industrial Area Phase 1, Chandigarh"
+  },
+  {
+    "id": "AMN-22",
+    "name": "Sector 35C Promenade Market",
+    "category": "Markets",
+    "lat": 30.7235,
+    "lng": 76.7608,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.7,
+    "locality": "Sector 35, Chandigarh"
+  },
+  {
+    "id": "AMN-23",
+    "name": "Phase 7 Main Market Mohali",
+    "category": "Markets",
+    "lat": 30.7095,
+    "lng": 76.725,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.6,
+    "locality": "Phase 7, Mohali"
+  },
+  {
+    "id": "AMN-24",
+    "name": "VR Punjab Mall",
+    "category": "Markets",
+    "lat": 30.7351,
+    "lng": 76.6788,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.6,
+    "locality": "NH-21, Kharar-Mohali"
+  },
+  {
+    "id": "AMN-25",
+    "name": "Cosmo Plaza & D-Mart Hub",
+    "category": "Markets",
+    "lat": 30.6415,
+    "lng": 76.819,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.5,
+    "locality": "Zirakpur"
+  },
+  {
+    "id": "AMN-26",
+    "name": "Shaheed Bhagat Singh Intl Airport",
+    "category": "Transport",
+    "lat": 30.6735,
+    "lng": 76.7885,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.8,
+    "locality": "Aerocity Road, Mohali"
+  },
+  {
+    "id": "AMN-27",
+    "name": "ISBT Sector 43 Inter-State Terminus",
+    "category": "Transport",
+    "lat": 30.7164,
+    "lng": 76.7435,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.5,
+    "locality": "Sector 43, Chandigarh"
+  },
+  {
+    "id": "AMN-28",
+    "name": "SAS Nagar Mohali Railway Station",
+    "category": "Transport",
+    "lat": 30.6795,
+    "lng": 76.7248,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.4,
+    "locality": "Phase 11, Mohali"
+  },
+  {
+    "id": "AMN-29",
+    "name": "Chandigarh Junction Railway Station",
+    "category": "Transport",
+    "lat": 30.7021,
+    "lng": 76.8219,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.5,
+    "locality": "Daria, Chandigarh"
+  },
+  {
+    "id": "AMN-30",
+    "name": "PR-7 Airport Ring Junction",
+    "category": "Transport",
+    "lat": 30.6512,
+    "lng": 76.7985,
+    "source": "OpenStreetMap Verified Coordinate",
+    "rating": 4.4,
+    "locality": "PR-7 Corridor, Zirakpur"
+  }
+]
